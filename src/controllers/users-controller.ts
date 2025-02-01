@@ -5,7 +5,7 @@ import { z } from "zod";
 import { AppError } from "@/utils/AppError";
 
 class UsersController {
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<void> {
     const bodySchema = z.object({
       name: z.string().trim().min(2),
       email: z.string().email(),
@@ -30,7 +30,7 @@ class UsersController {
 
     const { password: _, ...userWithoutPassword } = user;
 
-    return response.status(201).json(userWithoutPassword);
+    response.status(201).json(userWithoutPassword);
   }
 }
 

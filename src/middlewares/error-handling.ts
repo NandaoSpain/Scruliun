@@ -7,16 +7,19 @@ export function errorHandling(
   request: Request, 
   response: Response,
   next: NextFunction
-) {
+) : void {
   if(error instanceof AppError) {
-    return response.status(error.statusCode).json({ message: error.message });
+    response.status(error.statusCode).json({ message: error.message });
+    return
   }
 
   if(error instanceof ZodError) {
-    return response.status(400).json({ message: "validation error",
+    response.status(400).json({ message: "validation error",
       issues: error.format()
      });
+    return
   }
   
-  return response.status(500).json({ message: error.message });
+  response.status(500).json({ message: error.message });
+  return
 }
