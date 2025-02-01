@@ -1,8 +1,11 @@
-import express from "express"
+import express from "express";
 import "express-async-errors"
 
-const app = express()
+import { errorHandling } from "./middlewares/error-handling";
 
-app.use(express.json())
+const app = express();
 
-export { app }
+app.use(express.json());
+//app.use(errorHandling)
+
+export { app };
