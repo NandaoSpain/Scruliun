@@ -7,3 +7,97 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UsersRoles {
+  admin
+  user
+}
+
+enum TaskStatus {
+  pending
+  inProgress
+  completed
+}
+
+enum TaskPriority {
+  low
+  medium
+  high
+}
+
+model Users {
+  id String @id @default(uuid()) @unique
+  email String @unique
+  name String
+  password String
+
+  role UsersRoles @default(user)
+
+  TeamMembers TeamMembers[]
+  Tasks Tasks[]
+  TaskHistory TaskHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Teams {
+  id String @id @default(uuid())
+  name String 
+  description String 
+
+  TeamMembers TeamMembers[]
+  Tasks Tasks[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("teams")
+}
+
+model TeamMembers {
+  id String @id @default(uuid())
+  userId String 
+  teamId String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user Users @relation(fields: [userId], references: [id])
+  team Teams @relation(fields: [teamId], references: [id])
+  
+  @@map("team_members")
+}
+
+model Tasks {
+  id String @id @default(uuid())
+  title String
+  description String
+  status TaskStatus @default(pending)
+  priority TaskPriority @default(low)
+  assignedTo String
+  teamId String
+
+  TaskHistory TaskHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user Users @relation(fields: [assignedTo], references: [id])
+  team Teams @relation(fields: [teamId], references: [id])
+
+  @@map("tasks")
+}
+
+model TaskHistory {
+  id String @id @default(uuid())
+  taskId String
+  changedBy String
+  oldStatus String
+  newStatus String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user Users @relation(fields: [changedBy], references: [id])
+  task Tasks @relation(fields: [taskId], references: [id])  
+
+  @@map("task_history")
+}
