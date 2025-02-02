@@ -76,9 +76,7 @@ class TasksController {
     });
     const { title, description, assignedTo, team } = bodySchema.parse(
       request.body
-    );
-
-    
+    );    
 
     const user = await prisma.users.findFirst({
       where: { name: { equals: assignedTo, mode: "insensitive" } },
@@ -96,11 +94,6 @@ class TasksController {
     if (!teamData) {
       response.status(400).json({ message: "Team not found" });
       return;
-    }
-    if (user.role !== "admin") {
-      response
-        .status(403)
-        .json({ message: "You are not authorized to update this task" });
     }
 
     const task = await prisma.tasks.update({

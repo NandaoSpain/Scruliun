@@ -36,6 +36,7 @@ class SessionsController {
 
     response.status(200).json({ token, user: userWithoutPassword });
   }
+
 }
 
 export { SessionsController };
