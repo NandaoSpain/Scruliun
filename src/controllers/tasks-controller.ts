@@ -59,7 +59,7 @@ class TasksController {
   }
 
   async update(request: Request, response: Response) {
-    
+
     const { id } = request.params
     const taskExists = await prisma.tasks.findFirst( {where: { id } })
 
@@ -76,7 +76,7 @@ class TasksController {
     });
     const { title, description, assignedTo, team } = bodySchema.parse(
       request.body
-    );    
+    );
 
     const user = await prisma.users.findFirst({
       where: { name: { equals: assignedTo, mode: "insensitive" } },
@@ -106,7 +106,9 @@ class TasksController {
       },
     });
     response.json(task);
+
   }
+
 }
 
 export { TasksController };
