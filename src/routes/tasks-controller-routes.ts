@@ -8,5 +8,6 @@ const tasksController = new TasksController()
 tasksRoutes.get("/", tasksController.index)
 tasksRoutes.post("/", tasksController.create)
 tasksRoutes.put("/:id", tasksController.show)
+tasksRoutes.patch("/:id", tasksController.update)
 
 export { tasksRoutes }
