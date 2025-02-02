@@ -46,6 +46,17 @@ class TasksController {
     const tasks = await prisma.tasks.findMany();
     response.json(tasks);
   }
+
+  async show(request: Request, response: Response) {
+    const { id } = request.params
+    const task = await prisma.tasks.findUnique({ where: { id: id} })
+    if (!task) {
+      response.status(404).json({ message: "Task not found" });
+      return;
+    }
+    response.json(task);
+    return
+  }
 }
 
 export { TasksController };
