@@ -42,6 +42,10 @@ class TasksController {
     });
     response.json(task);
   }
+  async index(request: Request, response: Response) {
+    const tasks = await prisma.tasks.findMany();
+    response.json(tasks);
+  }
 }
 
 export { TasksController };
