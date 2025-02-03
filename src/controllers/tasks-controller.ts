@@ -59,11 +59,10 @@ class TasksController {
   }
 
   async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const taskExists = await prisma.tasks.findFirst({ where: { id } });
 
-    const { id } = request.params
-    const taskExists = await prisma.tasks.findFirst( {where: { id } })
-
-    if(!taskExists){
+    if (!taskExists) {
       response.status(400).json({ message: "Task ID is invalid" });
       return;
     }
@@ -106,9 +105,7 @@ class TasksController {
       },
     });
     response.json(task);
-
   }
-
 }
 
 export { TasksController };
