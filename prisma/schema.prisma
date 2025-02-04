@@ -29,12 +29,15 @@ model Users {
   email String @unique
   name String
   password String
+  team String? @unique
 
   role UsersRoles @default(user)
 
   TeamMembers TeamMembers[]
   Tasks Tasks[]
   TaskHistory TaskHistory[]
+
+
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -50,6 +53,7 @@ model Teams {
   TeamMembers TeamMembers[]
   Tasks Tasks[]
 
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -63,7 +67,7 @@ model TeamMembers {
   createdAt DateTime @default(now()) @map("created_at")
 
   user Users @relation(fields: [userId], references: [id])
-  team Teams @relation(fields: [teamId], references: [id])
+  team Teams? @relation(fields: [teamId], references: [id])
   
   @@map("team_members")
 }
