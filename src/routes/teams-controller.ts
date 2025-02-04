@@ -5,5 +5,6 @@ const teamsRoutes = Router()
 const teamsController = new TeamsController()
 
 teamsRoutes.post("/", teamsController.create)
+teamsRoutes.patch("/:id", teamsController.update)
 
 export { teamsRoutes }
