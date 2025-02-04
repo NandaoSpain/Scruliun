@@ -29,7 +29,7 @@ model Users {
   email String @unique
   name String
   password String
-  team String? @unique
+  team String? 
 
   role UsersRoles @default(user)
 

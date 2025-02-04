@@ -29,19 +29,28 @@ class UsersController {
       where: { name: { equals: team, mode: "insensitive" } },
     });
 
+    if (!teamData) {
+      throw new AppError("Team not found", 404); 
+    }    
+
     const user = await prisma.users.create({
       data: { name, email, password: hashedPassword, team: teamData ? teamData.name : null },
     });
 
+    await prisma.teamMembers.create({
+      data: {
+        userId: user.id,
+        teamId: teamData.id
+      },
+    });
+
     const { password: _, ...userWithoutPassword  } = user;
 
-    await prisma.teamMembers.update({
-      where: { userId: user.id, teamId: teamData.id },
-      data: { role: "ADMIN" },
-    })
+    //ver como listar os times e exibir os nomes dos membros
 
     response.status(201).json(userWithoutPassword);
   }
+
 
 
 }
