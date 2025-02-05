@@ -9,24 +9,24 @@ class TaskStatusController {
     });
     const { id } = request.params;
     const { status } = request.body;
-    const taskStatus = await prisma.tasks.findFirst({ where: { id: id }})
-    const user = request.user.id
+    const task = await prisma.tasks.findFirst({ where: { id: id }})
+    const userId = request.user.id
+    const userRole = request.user.role
 
-    if(taskStatus?.status === status){
-      response.status(400).json({ message: "Task status is already in the desired state" });
-      return;
+    if(userRole === "user"){
+      if(task?.status === status){
+        response.status(400).json({ message: "Task status is already in the desired state" });
+        return;
+      }
+      if(task?.assignedTo !== userId){
+        response.status(403).json({ message: "You are not authorized to update this task" });
+        return;      
+      }
     }
-    console.log(taskStatus?.assignedTo, user)
-    if(taskStatus?.assignedTo !== user){
-      response.status(403).json({ message: "You are not authorized to update this task" });
-      return;      
-    }
+
     await prisma.tasks.update({ where: { id: id }, data: { status: status } });
     response.status(200).json({ message: "Task status updated" });
   }
-
-
 }
-
 
 export { TaskStatusController };
