@@ -51,8 +51,6 @@ class UsersController {
     response.status(201).json(userWithoutPassword);
   }
 
-
-
 }
 
 export { UsersController }
