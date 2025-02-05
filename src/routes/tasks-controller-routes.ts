@@ -11,6 +11,7 @@ tasksRoutes.use(ensureAuthenticated);
 tasksRoutes.get("/", tasksController.index);
 tasksRoutes.post("/", tasksController.create);
 tasksRoutes.put("/:id", tasksController.show);
+tasksRoutes.delete("/:id", tasksController.delete);
 tasksRoutes.patch(
   "/:id",
   verifyUserAuthorization(["admin"]),

@@ -106,6 +106,17 @@ class TasksController {
     });
     response.json(task);
   }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params
+    const taskExists = await prisma.tasks.findFirst({ where: { id: id }})
+    if (!taskExists) {
+      response.status(400).json({ message: "Task ID is invalid" });
+      return;
+    }
+    await prisma.tasks.delete({ where: { id: id } });
+    response.status(204).json();
+  }
 }
 
 export { TasksController };

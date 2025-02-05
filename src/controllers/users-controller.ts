@@ -46,8 +46,6 @@ class UsersController {
 
     const { password: _, ...userWithoutPassword  } = user;
 
-    //ver como listar os times e exibir os nomes dos membros
-
     response.status(201).json(userWithoutPassword);
   }
 
