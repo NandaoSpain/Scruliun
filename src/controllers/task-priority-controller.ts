@@ -1,4 +1,5 @@
 import { prisma } from "@/database/prisma";
+import { AppError } from "@/utils/AppError";
 import { Request, Response } from "express";
 import { z } from "zod";
 
@@ -8,6 +9,10 @@ class TaskPriorityController {
 
     const user = request.user;
     const task = await prisma.tasks.findFirst({ where: { id: id } });
+
+    if(!task) {
+      throw new AppError("Task not found", 404)
+    }
 
     const bodySchema = z.object({
       priority: z.enum(["low", "medium", "high"]),
@@ -28,11 +33,12 @@ class TaskPriorityController {
         return;
       }
     }
-
+    
     await prisma.tasks.update({
       where: { id },
       data: { priority },
     });
+
     response
       .status(200)
       .json({ message: "Task priority updated successfully" });
