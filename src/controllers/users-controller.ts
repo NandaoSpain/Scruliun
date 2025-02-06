@@ -55,7 +55,12 @@ class UsersController {
   }
   async index(request: Request, response: Response) {
     const users = await prisma.users.findMany();
-    response.json(users);
+
+    const usersWithoutPassword = users.map(
+      ({ password, ...usersWithoutPassword }) => usersWithoutPassword
+    );
+
+    response.json(usersWithoutPassword);
   }
 
   async show(request: Request, response: Response) {
