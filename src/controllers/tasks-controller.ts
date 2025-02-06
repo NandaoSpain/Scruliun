@@ -39,6 +39,16 @@ class TasksController {
         teamId: teamData.id,
       },
     });
+
+    const taskHistoryCreate = await prisma.taskHistory.create({
+      data: {
+        changedBy: user.id,
+        taskId: task.id,
+        oldStatus: task.status,
+        newStatus: task.status
+      },
+    })
+
     response.json(task);
   }
   async index(request: Request, response: Response) {
@@ -99,6 +109,16 @@ class TasksController {
         teamId: teamData.id,
       },
     });
+
+    const taskHistoryUpdate = await prisma.taskHistory.create({
+      data: {
+        changedBy: user.id,
+        taskId: task.id,
+        oldStatus: taskExists?.status,
+        newStatus: task.status
+      },      
+    })
+
     response.json(task);
   }
 

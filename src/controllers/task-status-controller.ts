@@ -14,6 +14,10 @@ class TaskStatusController {
     const userId = request.user.id;
     const userRole = request.user.role;
 
+    if(!task){
+      throw new AppError("Task not found", 404);
+    }
+
     if (userRole === "user") {
       if (task?.status === status) {
         throw new AppError("Task status is already in the desired state", 400);
@@ -24,8 +28,19 @@ class TaskStatusController {
     }
 
     await prisma.tasks.update({ where: { id: id }, data: { status: status } });
+    
+    const taskHistoryUpdate = await prisma.taskHistory.create({
+      data: {
+        changedBy: request.user.id,
+        taskId: task?.id,
+        oldStatus: task.status,
+        newStatus: task.status
+      },      
+    })
+
     response.status(200).json({ message: "Task status updated" });
   }
 }
+
 
 export { TaskStatusController };
