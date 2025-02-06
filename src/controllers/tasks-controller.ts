@@ -1,4 +1,5 @@
 import { prisma } from "@/database/prisma";
+import { AppError } from "@/utils/AppError";
 import { Request, Response } from "express";
 import { z } from "zod";
 
@@ -19,8 +20,7 @@ class TasksController {
     });
 
     if (!user) {
-      response.status(400).json({ message: "User not found" });
-      return;
+      throw new AppError("User not found", 404);
     }
 
     const teamData = await prisma.teams.findFirst({
@@ -28,8 +28,7 @@ class TasksController {
     });
 
     if (!teamData) {
-      response.status(400).json({ message: "Team not found" });
-      return;
+      throw new AppError("Team not found", 404);
     }
 
     const task = await prisma.tasks.create({
@@ -51,8 +50,7 @@ class TasksController {
     const { id } = request.params;
     const task = await prisma.tasks.findUnique({ where: { id: id } });
     if (!task) {
-      response.status(404).json({ message: "Task not found" });
-      return;
+      throw new AppError("Task not found", 404);
     }
     response.json(task);
     return;
@@ -63,8 +61,7 @@ class TasksController {
     const taskExists = await prisma.tasks.findFirst({ where: { id } });
 
     if (!taskExists) {
-      response.status(400).json({ message: "Task ID is invalid" });
-      return;
+      throw new AppError("Task ID is invalid", 400);
     }
 
     const bodySchema = z.object({
@@ -82,8 +79,7 @@ class TasksController {
     });
 
     if (!user) {
-      response.status(400).json({ message: "User not found" });
-      return;
+      throw new AppError("User not found", 404);
     }
 
     const teamData = await prisma.teams.findFirst({
@@ -91,8 +87,7 @@ class TasksController {
     });
 
     if (!teamData) {
-      response.status(400).json({ message: "Team not found" });
-      return;
+      throw new AppError("Team not found", 404);
     }
 
     const task = await prisma.tasks.update({
@@ -108,11 +103,10 @@ class TasksController {
   }
 
   async delete(request: Request, response: Response) {
-    const { id } = request.params
-    const taskExists = await prisma.tasks.findFirst({ where: { id: id }})
+    const { id } = request.params;
+    const taskExists = await prisma.tasks.findFirst({ where: { id: id } });
     if (!taskExists) {
-      response.status(400).json({ message: "Task ID is invalid" });
-      return;
+      throw new AppError("Task ID is invalid", 400);
     }
     await prisma.tasks.delete({ where: { id: id } });
     response.status(204).json();

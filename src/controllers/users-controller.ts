@@ -15,7 +15,7 @@ class UsersController {
 
     const { name, email, password, team } = bodySchema.parse(request.body);
 
-    const userWithSameEmail = await prisma.users.findFirst({
+    const userWithSameEmail = await prisma.users.findUnique({
       where: { email },
     });
 
@@ -62,8 +62,7 @@ class UsersController {
     const { id } = request.params;
     const user = await prisma.users.findUnique({ where: { id } });
     if (!user) {
-      response.status(404).json({ message: "User not found" });
-      return;
+      throw new AppError("User not found", 404);
     }
     response.json(user);
   }
@@ -78,15 +77,14 @@ class UsersController {
       throw new AppError("You can't delete yourself", 403);
     }
     if (!userExists) {
-      response.status(404).json({ message: "User not found" });
-      return;
+      throw new AppError("User not found", 404);
     }
-    if(userExists.Tasks.length > 0) {
-      response.status(403).json({ message: "This user have tasks open"})
+    if (userExists.Tasks.length > 0) {
+      throw new AppError("This user have tasks open", 404);
     }
     await prisma.teamMembers.deleteMany({
       where: { userId: id },
-    })
+    });
     await prisma.users.delete({ where: { id } });
     response.status(204).send();
   }

@@ -1,12 +1,28 @@
 import { Router } from "express";
 import { TeamsController } from "@/controllers/teams-controller";
+import { ensureAuthenticated } from "@/middlewares/ensure-authenticated";
+import { verifyUserAuthorization } from "@/middlewares/verify-user-authorization";
 
-const teamsRoutes = Router()
-const teamsController = new TeamsController()
+const teamsRoutes = Router();
+const teamsController = new TeamsController();
 
-teamsRoutes.get("/", teamsController.index)
-teamsRoutes.post("/", teamsController.create)
-teamsRoutes.patch("/:id", teamsController.update)
-teamsRoutes.delete("/:id", teamsController.delete)
+teamsRoutes.use(ensureAuthenticated);
+teamsRoutes.get("/", teamsController.index);
+teamsRoutes.get("/:id", teamsController.show);
+teamsRoutes.post(
+  "/",
+  verifyUserAuthorization(["admin"]),
+  teamsController.create
+);
+teamsRoutes.patch(
+  "/:id",
+  verifyUserAuthorization(["admin"]),
+  teamsController.update
+);
+teamsRoutes.delete(
+  "/:id",
+  verifyUserAuthorization(["admin"]),
+  teamsController.delete
+);
 
-export { teamsRoutes }
+export { teamsRoutes };

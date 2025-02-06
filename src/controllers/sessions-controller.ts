@@ -29,14 +29,13 @@ class SessionsController {
 
     const token = sign({ role: user.role ?? "user" }, secret, {
       subject: user.id,
-      expiresIn
+      expiresIn,
     });
 
-    const {password: hashedPassword, ...userWithoutPassword} = user
+    const { password: hashedPassword, ...userWithoutPassword } = user;
 
     response.status(200).json({ token, user: userWithoutPassword });
   }
-
 }
 
 export { SessionsController };
