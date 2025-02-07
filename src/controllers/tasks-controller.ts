@@ -45,9 +45,9 @@ class TasksController {
         changedBy: user.id,
         taskId: task.id,
         oldStatus: task.status,
-        newStatus: task.status
+        newStatus: task.status,
       },
-    })
+    });
 
     response.json(task);
   }
@@ -115,9 +115,9 @@ class TasksController {
         changedBy: user.id,
         taskId: task.id,
         oldStatus: taskExists?.status,
-        newStatus: task.status
-      },      
-    })
+        newStatus: task.status,
+      },
+    });
 
     response.json(task);
   }

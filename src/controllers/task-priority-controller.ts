@@ -10,8 +10,8 @@ class TaskPriorityController {
     const user = request.user;
     const task = await prisma.tasks.findFirst({ where: { id: id } });
 
-    if(!task) {
-      throw new AppError("Task not found", 404)
+    if (!task) {
+      throw new AppError("Task not found", 404);
     }
 
     const bodySchema = z.object({
@@ -33,7 +33,7 @@ class TaskPriorityController {
         return;
       }
     }
-    
+
     await prisma.tasks.update({
       where: { id },
       data: { priority },

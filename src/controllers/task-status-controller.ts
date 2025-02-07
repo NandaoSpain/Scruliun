@@ -14,7 +14,7 @@ class TaskStatusController {
     const userId = request.user.id;
     const userRole = request.user.role;
 
-    if(!task){
+    if (!task) {
       throw new AppError("Task not found", 404);
     }
 
@@ -34,13 +34,12 @@ class TaskStatusController {
         changedBy: request.user.id,
         taskId: task?.id,
         oldStatus: task.status,
-        newStatus: status
-      },      
-    })
+        newStatus: status,
+      },
+    });
 
     response.status(200).json({ message: "Task status updated" });
   }
 }
-
 
 export { TaskStatusController };
