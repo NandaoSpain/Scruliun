@@ -29,7 +29,7 @@ class TaskStatusController {
 
     await prisma.tasks.update({ where: { id: id }, data: { status: status } });
 
-    const taskHistoryUpdate = await prisma.taskHistory.create({
+    await prisma.taskHistory.create({
       data: {
         changedBy: request.user.id,
         taskId: task?.id,

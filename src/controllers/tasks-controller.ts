@@ -40,7 +40,7 @@ class TasksController {
       },
     });
 
-    const taskHistoryCreate = await prisma.taskHistory.create({
+    await prisma.taskHistory.create({
       data: {
         changedBy: user.id,
         taskId: task.id,
@@ -110,7 +110,7 @@ class TasksController {
       },
     });
 
-    const taskHistoryUpdate = await prisma.taskHistory.create({
+    await prisma.taskHistory.create({
       data: {
         changedBy: user.id,
         taskId: task.id,
