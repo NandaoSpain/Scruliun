@@ -11,9 +11,10 @@ class UsersController {
       email: z.string().email(),
       password: z.string().min(6),
       team: z.string().trim(),
+      role: z.string().trim()
     });
 
-    const { name, email, password, team } = bodySchema.parse(request.body);
+    const { name, email, password, team, role } = bodySchema.parse(request.body);
 
     const userWithSameEmail = await prisma.users.findUnique({
       where: { email },
@@ -39,6 +40,7 @@ class UsersController {
         email,
         password: hashedPassword,
         team: teamData ? teamData.name : null,
+        role: request.body.role
       },
     });
 
@@ -51,7 +53,7 @@ class UsersController {
 
     const { password: _, ...userWithoutPassword } = user;
 
-    response.status(201).json(userWithoutPassword);
+    response.status(200).json(userWithoutPassword);
   }
   async index(request: Request, response: Response) {
     const users = await prisma.users.findMany();
