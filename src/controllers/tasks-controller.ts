@@ -128,6 +128,7 @@ class TasksController {
     if (!taskExists) {
       throw new AppError("Task ID is invalid", 400);
     }
+    await prisma.taskHistory.deleteMany({ where: { taskId: id } });
     await prisma.tasks.delete({ where: { id: id } });
     response.status(204).json();
   }
