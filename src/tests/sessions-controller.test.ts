@@ -4,11 +4,16 @@ import { prisma } from "@/database/prisma";
 
 describe("SessionsController", () => {
   let user_id: string;
+  let adminId: string
 
   afterAll(async () => {
     if (user_id) {
       await prisma.teamMembers.deleteMany({ where: { userId: user_id } });
       await prisma.users.delete({ where: { id: user_id } });
+    }
+    if (adminId) {
+      await prisma.teamMembers.deleteMany({ where: { userId: adminId } })
+      await prisma.users.delete({ where: { id: adminId } });
     }
   });
 
@@ -34,10 +39,6 @@ describe("SessionsController", () => {
   });
 
   it("should list users", async () => {
-    afterAll(async () => {
-      await prisma.teamMembers.deleteMany({ where: { userId: user_id } })
-      await prisma.users.delete({ where: { id: user_id } });
-    })
     const adminUserResponse = await request(app).post("/users").send({
       name: "Admin User",
       email: "admin@example.com",
@@ -46,6 +47,7 @@ describe("SessionsController", () => {
       role: "admin"
     });
 
+    adminId = adminUserResponse.body.id
     expect(adminUserResponse.status).toBe(200); 
     const sessionResponse = await request(app).post("/sessions").send({
         email: "admin@example.com",
