@@ -76,110 +76,133 @@ Siga estas instruções para configurar e executar o projeto localmente.
    ```bash
    git clone https://github.com/NandaoSpain/Scruliun.git
    cd Scruliun
+   ```
 
-2. **Instale as dependências:
-
+2. **Instale as dependências**:
+```
 bash
 Copy
 npm install
-Configure o ambiente:
+```
+3. **Configure o ambiente**:
 
-Crie um arquivo .env na raiz do projeto e adicione as variáveis de ambiente necessárias. Exemplo:
-
+* Crie um arquivo .env na raiz do projeto e adicione as variáveis de ambiente necessárias. Exemplo:
+```
 env
 Copy
 DATABASE_URL="sua_url_de_conexao_com_o_banco_de_dados"
 JWT_SECRET="sua_chave_secreta_para_jwt"
 PORT=3000
-Execute as migrações do Prisma:
+```
 
+4. **Execute as migrações do Prisma**:
+```
 bash
 Copy
 npx prisma migrate dev --name init
-Inicie o servidor:
+```
 
+5. **Inicie o servidor**:
+```
 bash
 Copy
 npm run dev
+```
 O servidor estará rodando em http://localhost:3000.
 
-Uso
+## Uso
 A API possui endpoints para gerenciar usuários e tarefas. Abaixo estão alguns exemplos de uso:
 
-Autenticação
-Registro de usuário:
-
+### Autenticação
+* Registro de usuário:
+```
 bash
 Copy
 POST /auth/register
 Body: { "name": "João", "email": "joao@example.com", "password": "senha123" }
-Login de usuário:
+```
 
+* Login de usuário:
+```
 bash
 Copy
 POST /auth/login
 Body: { "email": "joao@example.com", "password": "senha123" }
-Tarefas
-Criar uma tarefa:
+```
 
+### Tarefas
+* Criar uma tarefa:
+```
 bash
 Copy
 POST /tasks
 Headers: { "Authorization": "Bearer <token>" }
 Body: { "title": "Nova tarefa", "description": "Descrição da tarefa", "status": "pendente", "priority": "alta" }
-Listar todas as tarefas:
-
+```
+* Listar todas as tarefas:
+```
 bash
 Copy
 GET /tasks
 Headers: { "Authorization": "Bearer <token>" }
-Atualizar uma tarefa:
+```
 
+* Atualizar uma tarefa:
+```
 bash
 Copy
 PUT /tasks/:id
 Headers: { "Authorization": "Bearer <token>" }
 Body: { "status": "em andamento" }
-Excluir uma tarefa:
-
+```
+* Excluir uma tarefa:
+```
 bash
 Copy
 DELETE /tasks/:id
 Headers: { "Authorization": "Bearer <token>" }
-Testes
-O projeto inclui testes unitários e de integração usando Jest. Para executar os testes, use o seguinte comando:
+```
 
+* Testes
+O projeto inclui testes unitários e de integração usando Jest. Para executar os testes, use o seguinte comando:
+```
 bash
 Copy
 npm test
-Contribuição
+```
+### Contribuição
 Contribuições são bem-vindas! Siga estas etapas para contribuir:
 
-Faça um fork do repositório.
+1. Faça um fork do repositório.
 
-Crie uma nova branch:
-
+2. Crie uma nova branch:
+```
 bash
 Copy
 git checkout -b feature/NomeDaFeature
-Faça commit das suas alterações:
+```
 
+3. Faça commit das suas alterações:
+```
 bash
 Copy
 git commit -m 'Adiciona nova feature'
-Envie as alterações:
+```
 
+4. Envie as alterações:
+```
 bash
 Copy
 git push origin feature/NomeDaFeature
-Abra um Pull Request.
+```
+5. Abra um Pull Request.
 
-Licença
+### Licença
 Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-Contato
+### Contato
 GitHub: NandaoSpain
 
-Email: [Seu email]
+Email: fernando111oficina@gmail.com
 
-LinkedIn: [Seu LinkedIn]
+LinkedIn: (https://www.linkedin.com/in/fernando-rodrigues-2b480321a/)
