@@ -79,33 +79,27 @@ Siga estas instruções para configurar e executar o projeto localmente.
    ```
 
 2. **Instale as dependências**:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 3. **Configure o ambiente**:
 
 * Crie um arquivo .env na raiz do projeto e adicione as variáveis de ambiente necessárias. Exemplo:
-```
-env
-Copy
-DATABASE_URL="sua_url_de_conexao_com_o_banco_de_dados"
-JWT_SECRET="sua_chave_secreta_para_jwt"
-PORT=3000
-```
+  ```env
+  DATABASE_URL="sua_url_de_conexao_com_o_banco_de_dados"
+  JWT_SECRET="sua_chave_secreta_para_jwt"
+  PORT=3000
+  ```
 
 4. **Execute as migrações do Prisma**:
-```
-bash
-Copy
-npx prisma migrate dev --name init
-```
+  ```bash
+  npx prisma migrate dev --name init
+  ```
 
 5. **Inicie o servidor**:
-```
-bash
-Copy
-npm run dev
-```
+  ```bash
+  npm run dev
+  ```
 O servidor estará rodando em http://localhost:3000.
 
 ## Uso
@@ -113,86 +107,66 @@ A API possui endpoints para gerenciar usuários e tarefas. Abaixo estão alguns 
 
 ### Autenticação
 * Registro de usuário:
-```
-bash
-Copy
-POST /auth/register
-Body: { "name": "João", "email": "joao@example.com", "password": "senha123" }
-```
+  ```bash
+  POST /auth/register
+  Body: { "name": "João", "email": "joao@example.com", "password": "senha123" }
+  ```
 
 * Login de usuário:
-```
-bash
-Copy
-POST /auth/login
-Body: { "email": "joao@example.com", "password": "senha123" }
-```
+  ```bash
+  POST /auth/login
+  Body: { "email": "joao@example.com", "password": "senha123" }
+  ```
 
 ### Tarefas
 * Criar uma tarefa:
-```
-bash
-Copy
-POST /tasks
-Headers: { "Authorization": "Bearer <token>" }
-Body: { "title": "Nova tarefa", "description": "Descrição da tarefa", "status": "pendente", "priority": "alta" }
-```
+  ```bash
+  POST /tasks
+  Headers: { "Authorization": "Bearer <token>" }
+  Body: { "title": "Nova tarefa", "description": "Descrição da tarefa", "status": "pendente", "priority": "alta" }
+  ```
 * Listar todas as tarefas:
-```
-bash
-Copy
-GET /tasks
-Headers: { "Authorization": "Bearer <token>" }
-```
+  ```bash
+  GET /tasks
+  Headers: { "Authorization": "Bearer <token>" }
+  ```
 
 * Atualizar uma tarefa:
-```
-bash
-Copy
-PUT /tasks/:id
-Headers: { "Authorization": "Bearer <token>" }
-Body: { "status": "em andamento" }
-```
+  ```bash
+  PUT /tasks/:id
+  Headers: { "Authorization": "Bearer <token>" }
+  Body: { "status": "em andamento" }
+  ```
 * Excluir uma tarefa:
-```
-bash
-Copy
-DELETE /tasks/:id
-Headers: { "Authorization": "Bearer <token>" }
-```
+  ```bash
+  DELETE /tasks/:id
+  Headers: { "Authorization": "Bearer <token>" }
+  ```
 
 * Testes
 O projeto inclui testes unitários e de integração usando Jest. Para executar os testes, use o seguinte comando:
-```
-bash
-Copy
-npm test
-```
+  ```bash
+  npm test
+  ```
 ### Contribuição
 Contribuições são bem-vindas! Siga estas etapas para contribuir:
 
 1. Faça um fork do repositório.
 
 2. Crie uma nova branch:
-```
-bash
-Copy
-git checkout -b feature/NomeDaFeature
-```
+  ```bash
+  git checkout -b feature/NomeDaFeature
+  ```
 
 3. Faça commit das suas alterações:
-```
-bash
-Copy
-git commit -m 'Adiciona nova feature'
-```
+  ```bash
+  git commit -m 'Adiciona nova feature'
+  ```
 
 4. Envie as alterações:
-```
-bash
-Copy
-git push origin feature/NomeDaFeature
-```
+  ```bash
+  git push origin feature/NomeDaFeature
+  ```
 5. Abra um Pull Request.
 
 ### Licença
