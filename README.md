@@ -79,9 +79,7 @@ Siga estas instruções para configurar e executar o projeto localmente.
    ```
 
 2. **Instale as dependências**:
-```
-bash
-Copy
+```bash
 npm install
 ```
 3. **Configure o ambiente**:
